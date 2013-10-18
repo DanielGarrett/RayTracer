@@ -26,14 +26,14 @@ public class Plane extends Shape {
 		double deltaRight = getRight(ray.t);
 		double movementNeeded = equationRight-t0Right;
 		double tNeeded = movementNeeded / deltaRight;
-		if(tNeeded <= 0.01)
+		if(tNeeded <= 0.001)
 		{
 			return Point3D.nullVal;
 		}
 		return ray.addVectorByFactor(tNeeded);
 	}
 	
-	private double getRight(Point3D p)
+	public double getRight(Point3D p)
 	{
 		return (p.x*normal.x)+(p.y*normal.y)+(p.z*normal.z);
 	}
@@ -47,6 +47,20 @@ public class Plane extends Shape {
 		Vector3D vsurface = Vector3D.makeVector(p, point);
 		double dot = vsurface.dot(normal);
 		return Math.abs(dot) < .001;
+	}
+	
+	public boolean isInFrontOfSurface(Point3D point)
+	{
+		Vector3D vsurface = Vector3D.makeVector(p, point);
+		double dot = vsurface.dot(normal);
+		return dot > -.001;
+	}
+	
+	public boolean isInBehindSurface(Point3D point)
+	{
+		Vector3D vsurface = Vector3D.makeVector(p, point);
+		double dot = vsurface.dot(normal);
+		return dot < .001;
 	}
 
 }

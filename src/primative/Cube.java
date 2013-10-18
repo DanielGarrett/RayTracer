@@ -61,19 +61,19 @@ public class Cube extends Shape {
 	}
 
 	public boolean isOnSurface(Point3D point) {
-		if(Math.abs(point.x-center.x)>((edgeLength/2)+.01))
-			return false;
-		if(Math.abs(point.y-center.y)>((edgeLength/2)+.01))
-			return false;
-		if(Math.abs(point.z-center.z)>((edgeLength/2)+.01))
-			return false;
-		if(Math.abs(point.x-center.x)-(edgeLength/2) < .01)
-			return true;
-		if(Math.abs(point.y-center.y)-(edgeLength/2) < .01)
-			return true;
-		if(Math.abs(point.z-center.z)-(edgeLength/2) < .01)
-			return true;
-		return false;
+		boolean result = false;
+		for(int i = 0; i < planes.length; i++)
+		{
+			if(planes[i].isOnSurface(point))
+			{
+				result = true;
+			}
+			else if(planes[i].isInFrontOfSurface(point))
+			{
+				return false;
+			}
+		}
+		return result;
 	}
 
 }
