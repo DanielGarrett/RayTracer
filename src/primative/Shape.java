@@ -5,7 +5,7 @@ import color.*;
 
 
 
-public abstract class Shape {
+public abstract class Shape implements Primative{
 	public double reflectivity;
 	public double transmittivity;
 	public IntColor baseColor;
@@ -24,7 +24,7 @@ public abstract class Shape {
 	
 	public Ray3D findRefractAt(Point3D point, Vector3D vector)
 	{
-		return null;
+		return Ray3D.nullVal;
 	}
 	public abstract boolean isOnSurface(Point3D point);
 }
