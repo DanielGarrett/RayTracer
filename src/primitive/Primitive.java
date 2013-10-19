@@ -1,10 +1,10 @@
-package primative;
+package primitive;
 
 import cartesian.Point3D;
 import cartesian.Ray3D;
 import cartesian.Vector3D;
 
-public interface Primative {
+public interface Primitive {
 
 	public Point3D findFirstIntersect(Ray3D ray);
 	public Vector3D findNormalAt(Point3D point);

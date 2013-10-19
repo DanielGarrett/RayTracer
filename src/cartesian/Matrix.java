@@ -34,12 +34,17 @@ public class Matrix {
 	
 	public static Matrix PointToMatrix(Point3D point)
 	{
-		return new Matrix(new double[][] {{point.x},{point.y},{point.x}});
+		return new Matrix(new double[][] {{point.x},{point.y},{point.z}});
 	}
 	
 	public static Matrix PointToAffineMatrix(Point3D point)
 	{
-		return new Matrix(new double[][] {{point.x},{point.y},{point.x},{1}});
+		return new Matrix(new double[][] {{point.x},{point.y},{point.z},{1}});
+	}
+	
+	public static Matrix VectorToAffineMatrix(Point3D point)
+	{
+		return new Matrix(new double[][] {{point.x},{point.y},{point.z},{0}});
 	}
 	
 	public Matrix Multiply(Matrix second)
@@ -58,11 +63,27 @@ public class Matrix {
 			{
 				for(int z = 0; z < second.matrix.length; z++)
 				{
-					newMatrix[x][y] = this.matrix[x][z] * second.matrix[z][y];
+					newMatrix[x][y] += this.matrix[x][z] * second.matrix[z][y];
 				}
 			}
 		}
 		return new Matrix(newMatrix);
+	}
+	
+	public Point3D toPoint()
+	{
+		if(matrix.length < 3)
+			throw new IllegalArgumentException("cannot make point from this matrix!");
+		return new Point3D(matrix[0][0], matrix[1][0], matrix[2][0]);
+			
+	}
+	
+	public Vector3D toVector()
+	{
+		if(matrix[0].length < 3)
+			throw new IllegalArgumentException("cannot make point from this matrix!");
+		return new Vector3D(matrix[0][0], matrix[0][1], matrix[0][2]);
+			
 	}
 
 }

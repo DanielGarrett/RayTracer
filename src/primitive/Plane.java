@@ -1,4 +1,4 @@
-package primative;
+package primitive;
 
 import cartesian.Point3D;
 import cartesian.Ray3D;

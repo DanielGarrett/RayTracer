@@ -1,11 +1,11 @@
-package primative;
+package primitive;
 
 import cartesian.*;
 import color.*;
 
 
 
-public abstract class Shape implements Primative{
+public abstract class Shape implements Primitive{
 	public double reflectivity;
 	public double transmittivity;
 	public IntColor baseColor;

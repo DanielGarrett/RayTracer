@@ -1,4 +1,4 @@
-package primative;
+package primitive;
 
 import color.IntColor;
 import cartesian.Point3D;
