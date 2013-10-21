@@ -3,11 +3,11 @@ package environment;
 import java.util.ArrayList;
 
 
-import primative.Cube;
-import primative.Plane;
-import primative.PortalRing;
-import primative.Shape;
-import primative.Sphere;
+import primitive.Cube;
+import primitive.Plane;
+import primitive.PortalRing;
+import primitive.Shape;
+import primitive.Sphere;
 import cartesian.Point3D;
 import cartesian.Ray3D;
 import cartesian.Vector3D;
@@ -45,7 +45,7 @@ public class Environment {
 		primatives.add(sphere2);
 		primatives.add(ring);
 		//primatives.add(sphere3);
-		camera = new Camera(new Point3D(0, 60, 30), new Vector3D(0, -3, -1.5), new Vector3D(0,0,1),
+		camera = new Camera(new Point3D(0, 60, 20), new Vector3D(0, -3, -1), new Vector3D(0,0,1),
 				51.75, 40, 2000, 1500);
 		rays = camera.getRays();
 		colors = new IntColor[rays.length][rays[0].length];

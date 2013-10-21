@@ -42,7 +42,7 @@ public class PortalRing extends Shape {
 		if(!plane.isOnSurface(point))
 			return false;
 		double dist = Vector3D.makeVector(point, center).length();
-		return dist > radius && dist < radius*1.03;
+		return dist > radius && dist < radius*1.05;
 	}
 
 }
