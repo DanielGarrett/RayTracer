@@ -10,6 +10,7 @@
 *.classpath
 *.zip
 *.settings
+*.prefs
 
 # Output files #
 *.png
