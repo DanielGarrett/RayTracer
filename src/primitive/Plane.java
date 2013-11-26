@@ -62,5 +62,14 @@ public class Plane extends Shape {
 		double dot = vsurface.dot(normal);
 		return dot < .001;
 	}
+	
+	public boolean isInside(Point3D point)
+	{
+		return isOnSurface(point);
+	}
+
+	public IntColor getBaseColor(Point3D point) {
+		return super.getBaseColor();
+	}
 
 }

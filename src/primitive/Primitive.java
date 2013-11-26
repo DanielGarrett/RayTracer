@@ -1,5 +1,6 @@
 package primitive;
 
+import color.IntColor;
 import cartesian.Point3D;
 import cartesian.Ray3D;
 import cartesian.Vector3D;
@@ -11,5 +12,8 @@ public interface Primitive {
 	public Ray3D findReflectAt(Point3D point, Vector3D incident);
 	public Ray3D findRefractAt(Point3D point, Vector3D vector);
 	public abstract boolean isOnSurface(Point3D point);
+	public double getReflectivity();
+	public double getTransmittivity();
+	public IntColor getBaseColor(Point3D point);
 
 }

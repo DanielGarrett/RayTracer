@@ -44,5 +44,14 @@ public class PortalRing extends Shape {
 		double dist = Vector3D.makeVector(point, center).length();
 		return dist > radius && dist < radius*1.05;
 	}
+	
+	public boolean isInside(Point3D point)
+	{
+		return isOnSurface(point);
+	}
+
+	public IntColor getBaseColor(Point3D point) {
+		return super.getBaseColor();
+	}
 
 }

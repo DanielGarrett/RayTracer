@@ -50,5 +50,14 @@ public class Sphere extends Shape {
 		Vector3D distance = findNormalAt(point);
 		return Math.abs(distance.length()-radius) < .001;
 	}
+	
+	public boolean isInside(Point3D point) {
+		Vector3D distance = findNormalAt(point);
+		return distance.length() < .001 + radius;
+	}
+
+	public IntColor getBaseColor(Point3D point) {
+		return super.getBaseColor();
+	}
 
 }

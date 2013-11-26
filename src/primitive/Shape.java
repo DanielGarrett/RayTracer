@@ -27,4 +27,21 @@ public abstract class Shape implements Primitive{
 		return Ray3D.nullVal;
 	}
 	public abstract boolean isOnSurface(Point3D point);
+	
+	public IntColor getBaseColor()
+	{
+		return baseColor;
+	}
+	
+	public double getTransmittivity()
+	{
+		return transmittivity;
+	}
+	
+	public double getReflectivity()
+	{
+		return reflectivity;
+	}
+	
+	public abstract boolean isInside(Point3D point);
 }

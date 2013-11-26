@@ -16,9 +16,10 @@ public class Matrix {
 	
 	public static Matrix StandardBasisToOtherBasis(Vector3D u, Vector3D v, Vector3D w, Point3D origin)
 	{
-		double[][] transform = new double[][]  {{u.x, u.y, u.z, -origin.x},
-												{v.x, v.y, v.z, -origin.y},
-												{w.x, w.y, w.z, -origin.z},
+		Vector3D vectorOrigin = new Vector3D(origin.x, origin.y, origin.z);
+		double[][] transform = new double[][]  {{u.x, u.y, u.z, -u.dot(vectorOrigin)},
+												{v.x, v.y, v.z, -v.dot(vectorOrigin)},
+												{w.x, w.y, w.z, -w.dot(vectorOrigin)},
 												{0, 0, 0, 1}};
 		return new Matrix(transform);
 	}
@@ -80,9 +81,9 @@ public class Matrix {
 	
 	public Vector3D toVector()
 	{
-		if(matrix[0].length < 3)
+		if(matrix.length < 3)
 			throw new IllegalArgumentException("cannot make point from this matrix!");
-		return new Vector3D(matrix[0][0], matrix[0][1], matrix[0][2]);
+		return new Vector3D(matrix[0][0], matrix[1][0], matrix[2][0]);
 			
 	}
 

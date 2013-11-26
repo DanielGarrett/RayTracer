@@ -75,5 +75,23 @@ public class Cube extends Shape {
 		}
 		return result;
 	}
+	
+	public boolean isInside(Point3D point)
+	{
+		if(isOnSurface(point))
+			return true;
+		for(int i = 0; i < planes.length; i++)
+		{
+			if(planes[i].isInFrontOfSurface(point))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public IntColor getBaseColor(Point3D point) {
+		return super.getBaseColor();
+	}
 
 }

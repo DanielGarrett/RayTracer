@@ -16,8 +16,8 @@ public class OrthogonalBasis {
 		u = bCrossW.multiply(1/bCrossW.length());
 		v = w.cross(u);
 		this.origin = origin;
-		toBasis = Matrix.StandardBasisToOtherBasis(u, v, w, origin);
-		fromBasis = Matrix.OtherBasisToStandardBasis(u, v, w, origin);
+		toBasis = Matrix.StandardBasisToOtherBasis(u, v, w, this.origin);
+		fromBasis = Matrix.OtherBasisToStandardBasis(u, v, w, this.origin);
 	}
 	
 	public Point3D pointToBasis(Point3D point)
