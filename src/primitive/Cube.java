@@ -90,8 +90,4 @@ public class Cube extends Shape {
 		return true;
 	}
 
-	public IntColor getBaseColor(Point3D point) {
-		return super.getBaseColor();
-	}
-
 }

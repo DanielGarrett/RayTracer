@@ -50,8 +50,4 @@ public class PortalRing extends Shape {
 		return isOnSurface(point);
 	}
 
-	public IntColor getBaseColor(Point3D point) {
-		return super.getBaseColor();
-	}
-
 }

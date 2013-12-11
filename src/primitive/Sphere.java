@@ -6,8 +6,8 @@ import cartesian.Ray3D;
 import cartesian.Vector3D;
 
 public class Sphere extends Shape {
-	private Point3D center;
-	private double radius;
+	protected Point3D center;
+	protected double radius;
 	
 	public Sphere(Point3D center, double radius, IntColor base, double reflectivity,  double transmittivity)
 	{
@@ -35,6 +35,8 @@ public class Sphere extends Shape {
 			return Point3D.nullVal;
 		double t = (-b-Math.sqrt(discr))/(2*a);//since sqrt(anything) >= 0, we assume the 
 											   //minus sqrt gives us the lowest value
+		if(t < -.001)
+			t = (-b+Math.sqrt(discr))/(2*a); // but if we are inside the sphere, there will be a negative and a positive
 		if(t < .001)
 			return Point3D.nullVal;
 		Point3D point = ray.addVectorByFactor(t);
@@ -54,10 +56,6 @@ public class Sphere extends Shape {
 	public boolean isInside(Point3D point) {
 		Vector3D distance = findNormalAt(point);
 		return distance.length() < .001 + radius;
-	}
-
-	public IntColor getBaseColor(Point3D point) {
-		return super.getBaseColor();
 	}
 
 }

@@ -28,7 +28,7 @@ public abstract class Shape implements Primitive{
 	}
 	public abstract boolean isOnSurface(Point3D point);
 	
-	public IntColor getBaseColor()
+	public IntColor getBaseColor(Point3D point)
 	{
 		return baseColor;
 	}
