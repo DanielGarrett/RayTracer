@@ -16,9 +16,9 @@ public class TextureSphere extends Sphere {
 	private Vector3D prime;
 	private IntColor[][] map;
 
-	public TextureSphere(Point3D center, double radius, IntColor base,
+	public TextureSphere(Point3D center, double radius, 
 			double reflectivity, double transmittivity, Vector3D up, Vector3D primeMer, String filename) {
-		super(center, radius, base, reflectivity, transmittivity);
+		super(center, radius, new IntColor(0,0,0), reflectivity, transmittivity);
 		this.north = up.unit();
 		Vector3D temp = primeMer.cross(north).unit();
 		this.prime = north.cross(temp);

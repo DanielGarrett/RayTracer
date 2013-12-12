@@ -35,9 +35,15 @@ public class ConstructiveSolid extends Shape {
 			distance1 = Vector3D.makeVector(ray.point, intersect1).length();
 			distance2 = Vector3D.makeVector(ray.point, intersect2).length();
 			if(distance1 < distance2)
-				return intersect1;
+				if(!shape2.isInside(intersect1) || shape2.isOnSurface(intersect1))
+					return intersect1;
+				else
+					return null;
 			else
-				return intersect2;
+				if(!shape1.isInside(intersect2) || shape1.isOnSurface(intersect2))
+					return intersect2;
+				else
+					return null;
 		case Intersect:
 			while(!(intersect1 == Point3D.nullVal && intersect2 == Point3D.nullVal))
 			{

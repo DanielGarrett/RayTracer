@@ -10,9 +10,10 @@ import color.IntColor;
 
 public class ImageMaker {
 	private BufferedImage buffer;
+	private String filename;
 
-	public ImageMaker() {
-		
+	public ImageMaker(String filename) {
+		this.filename = filename + ".png";
 	}
 	
 	public void makeImage(IntColor[][] colors)
@@ -28,7 +29,7 @@ public class ImageMaker {
 				buffer.setRGB(x, y, color);
 			}
 		}
-		File outputfile = new File("image.png");
+		File outputfile = new File(filename);
 		try {
 			ImageIO.write(buffer, "png", outputfile);
 		} catch (IOException e) {

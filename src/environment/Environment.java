@@ -24,75 +24,38 @@ public class Environment {
 	private Camera camera;
 	private Ray3D[][] rays;
 	private IntColor[][] colors;
-	//private final IntColor baseColor = new IntColor(128, 128, 128); //for fog
-	private final IntColor baseColor = new IntColor(0,0,0); //for not fog
+	private final IntColor fogColor = new IntColor(128, 128, 128); 
+	private final IntColor baseColor = new IntColor(0,0,0); 
 	private final int MAX_REFLECT = 8;
 	private Point3D lightSource;
 	private ArrayList<Portal> portals;
 	private boolean isPortal = false;
+	private boolean hasFog;
 	
-	public Environment()
+	public Environment(boolean fog)
 	{
-		lightSource = new Point3D(-90, 90, 50);
+		hasFog = fog;
+		lightSource = new Point3D(-40, 90, 80);
 		primatives = new ArrayList<Shape>();
 		portals = new ArrayList<Portal>();
 		Plane floor = new Plane(new Point3D(0,0,-.01), new Vector3D(0,0,1),
-				new IntColor(128, 128, 128), .6, 0);
-//		Sphere[] sphereline = new Sphere[25];
-//		for(int i = 0; i < sphereline.length; i++)
-//		{
-//			sphereline[i] = new Sphere(new Point3D(20, -i*50, 10), 10, new IntColor(255, 0, 0), 0, 0);
-//			primatives.add(sphereline[i]);
-//		}
-//		TextureSphere ts = new TextureSphere(new Point3D(0, 0, 10), 10, new IntColor(0,0,0), 0, 0,
-//				new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0), "earthmap1k.jpg");
-//		Sphere constructSphere = new Sphere(new Point3D(0, 0, 10), 13.25, 
-//				new IntColor(0, 255, 0), 0, 0);
-//		Cube obj = new Cube(new Point3D(0, 0, 10), new Vector3D(1,0,0), new Vector3D(0,1,0),
-//				new IntColor(255, 0, 0), 20, 0, 0);
-//		ConstructiveSolid cs = new ConstructiveSolid(obj, constructSphere, SetOperation.Subtract);
-//		Sphere constructSphere2 = new Sphere(new Point3D(-30, 30, 10), 13.25, 
-//				new IntColor(0, 255, 0), 0, 0);
-//		Cube obj2 = new Cube(new Point3D(-30,30,10), new Vector3D(1,0,0), new Vector3D(0,1,0),
-//				new IntColor(255, 0, 0), 20, 0, 0);
-//		ConstructiveSolid cs2 = new ConstructiveSolid(obj2, constructSphere2, SetOperation.Intersect);
-//		Sphere constructSphere3 = new Sphere(new Point3D(30, -30, 10), 13.25, 
-//				new IntColor(0, 255, 0), 0, 0);
-//		Cube obj3 = new Cube(new Point3D(30,-30,10), new Vector3D(1,0,0), new Vector3D(0,1,0),
-//				new IntColor(255, 0, 0), 20, 0, 0);
-//		ConstructiveSolid cs3 = new ConstructiveSolid(obj3, constructSphere3, SetOperation.Union);
-//		Sphere constructSphere4 = new Sphere(new Point3D(30, -30, 10), 13.25, 
-//				new IntColor(0, 255, 0), 0, 0);
-//		Cube obj4 = new Cube(new Point3D(30,-30,10), new Vector3D(1,0,0), new Vector3D(0,1,0),
-//				new IntColor(255, 0, 0), 20, 0, 0);
-//		ConstructiveSolid cs4 = new ConstructiveSolid(constructSphere4, obj4, SetOperation.Subtract);
-//		Cube obj2 = new Cube(new Point3D(13,3,2), new Vector3D(1,0,0), new Vector3D(0,1,0),
-//				new IntColor(0, 255, 0), 4, .2, 0);
-//		Sphere sphere = new Sphere(new Point3D(3, 15, 2), 2, new IntColor(0, 0, 255), .3, 0);
-//		Sphere sphere2 = new Sphere(new Point3D(-6, 15, 4), 4, new IntColor(0x54, 0x77, 0x38), .5, 0);
+				new IntColor(150, 150, 150), .6, 0);
 		Portal portal = new Portal(new Point3D(20,10,7), new Vector3D(-.25,1,.01), new Vector3D(0,0,1), 5, 
 				new Point3D(0,-10,10), new Vector3D(0,1,0), new Vector3D(0,0,1), 7, new IntColor(0,255,0));
-		Sphere trial = new Sphere(new Point3D(-10, -40, 10), 10, new IntColor(0, 0, 255), .3, 0);
-		Sphere trial2 = new Sphere(new Point3D(43, -40, 5), 5, new IntColor(255, 0, 0), .3, 0);
+		TextureSphere trial = new TextureSphere(new Point3D(-10, -40, 10), 10, 0, 0, 
+				new Vector3D(0, 0, 1), new Vector3D(1, 0, 0), "earthmap1k.jpg");
+		Sphere trial2 = new Sphere(new Point3D(43, -40, 5), 6.5, new IntColor(255, 0, 0), .3, 0);
+		Cube trial3 = new Cube(new Point3D(43, -40, 5), new Vector3D(0, 0, 1), new Vector3D(1, 1, 0), 
+				new IntColor(0, 255, 0), 10, .3, 0);
+		ConstructiveSolid cs = new ConstructiveSolid(trial3, trial2, SetOperation.Subtract);
 		primatives.add(floor);
-//		primatives.add(ts);
-//		primatives.add(cs);
-//		primatives.add(cs2);
-//		primatives.add(cs3);
-//		primatives.add(cs4);
-//		primatives.add(obj);
-//		primatives.add(constructSphere);
-//		primatives.add(obj2);
-//		primatives.add(sphere);
-//		primatives.add(sphere2);
+		primatives.add(cs);
 		primatives.add(portal.getRing());
 		primatives.add(portal.getOther().getRing());
 		portals.add(portal);
 		portals.add(portal.getOther());
 		primatives.add(trial);
-		primatives.add(trial2);
-		//primatives.add(sphere3);
-		camera = new Camera(new Point3D(0, 90, 10), new Vector3D(0, -1, 0), new Vector3D(0,0,1),
+		camera = new Camera(new Point3D(0, 90, 11), new Vector3D(0, -1, 0), new Vector3D(0,0,1),
 				51.75, 40, 2000, 1500);
 		rays = camera.getRays();
 		colors = new IntColor[rays.length][rays[0].length];
@@ -119,7 +82,10 @@ public class Environment {
 		Primitive s = getFirstIntersect(ray);
 		boolean localIsPortal = isPortal;
 		if(s==null)
-			return baseColor;
+			if(hasFog)
+				return fogColor;
+			else
+				return baseColor;
 		Point3D intersect = s.findFirstIntersect(ray);
 		double dist = Vector3D.makeVector(intersect, ray.point).length();
 		double fract = s.getReflectivity();
@@ -153,7 +119,8 @@ public class Environment {
 					combine = combine.takeFraction(.5);
 				}
 			}
-			//combine = addFog(combine, dist);
+			if(hasFog)
+				combine = addFog(combine, dist);
 		}
 		else
 		{
@@ -208,13 +175,12 @@ public class Environment {
 			return best;
 	}
 	
-	DoubleColor addFog(DoubleColor given, double dist)
+	private DoubleColor addFog(DoubleColor given, double dist)
 	{
-		double factor = Math.pow(.5, dist/200);
+		double factor = Math.pow(.5, dist/100);
 		given = given.takeFraction(factor);
-		DoubleColor fog = new DoubleColor(128, 128, 128);
-		fog = fog.takeFraction(1-factor);
-		return given.add(fog);
+		DoubleColor thisfog = fogColor.takeFraction(1-factor);
+		return given.add(thisfog);
 	}
 
 }
