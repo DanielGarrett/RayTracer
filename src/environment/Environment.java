@@ -33,7 +33,7 @@ public class Environment {
 	
 	public Environment()
 	{
-		lightSource = new Point3D(40, 100, 50);
+		lightSource = new Point3D(-90, 90, 50);
 		primatives = new ArrayList<Shape>();
 		portals = new ArrayList<Portal>();
 		Plane floor = new Plane(new Point3D(0,0,-.01), new Vector3D(0,0,1),
@@ -44,8 +44,8 @@ public class Environment {
 //			sphereline[i] = new Sphere(new Point3D(20, -i*50, 10), 10, new IntColor(255, 0, 0), 0, 0);
 //			primatives.add(sphereline[i]);
 //		}
-		TextureSphere ts = new TextureSphere(new Point3D(0, 0, 10), 10, new IntColor(0,0,0), 0, 0,
-				new Vector3D(0, 0, 1), new Vector3D(1, 0, 0), "earthmap1k.jpg");
+//		TextureSphere ts = new TextureSphere(new Point3D(0, 0, 10), 10, new IntColor(0,0,0), 0, 0,
+//				new Vector3D(0, 0, 1), new Vector3D(-1, 0, 0), "earthmap1k.jpg");
 //		Sphere constructSphere = new Sphere(new Point3D(0, 0, 10), 13.25, 
 //				new IntColor(0, 255, 0), 0, 0);
 //		Cube obj = new Cube(new Point3D(0, 0, 10), new Vector3D(1,0,0), new Vector3D(0,1,0),
@@ -70,10 +70,12 @@ public class Environment {
 //				new IntColor(0, 255, 0), 4, .2, 0);
 //		Sphere sphere = new Sphere(new Point3D(3, 15, 2), 2, new IntColor(0, 0, 255), .3, 0);
 //		Sphere sphere2 = new Sphere(new Point3D(-6, 15, 4), 4, new IntColor(0x54, 0x77, 0x38), .5, 0);
-//		Portal portal = new Portal(new Point3D(0,10.1,10), new Vector3D(0,1,0), new Vector3D(0,0,1), 7, 
-//				new Point3D(0,-10.1,10), new Vector3D(0,1,0), new Vector3D(0,0,-1), 7, new IntColor(0,255,0));
+		Portal portal = new Portal(new Point3D(20,10,7), new Vector3D(-.25,1,.01), new Vector3D(0,0,1), 5, 
+				new Point3D(0,-10,10), new Vector3D(0,1,0), new Vector3D(0,0,1), 7, new IntColor(0,255,0));
+		Sphere trial = new Sphere(new Point3D(-10, -40, 10), 10, new IntColor(0, 0, 255), .3, 0);
+		Sphere trial2 = new Sphere(new Point3D(43, -40, 5), 5, new IntColor(255, 0, 0), .3, 0);
 		primatives.add(floor);
-		primatives.add(ts);
+//		primatives.add(ts);
 //		primatives.add(cs);
 //		primatives.add(cs2);
 //		primatives.add(cs3);
@@ -83,12 +85,14 @@ public class Environment {
 //		primatives.add(obj2);
 //		primatives.add(sphere);
 //		primatives.add(sphere2);
-//		primatives.add(portal.getRing());
-//		primatives.add(portal.getOther().getRing());
-//		portals.add(portal);
-//		portals.add(portal.getOther());
+		primatives.add(portal.getRing());
+		primatives.add(portal.getOther().getRing());
+		portals.add(portal);
+		portals.add(portal.getOther());
+		primatives.add(trial);
+		primatives.add(trial2);
 		//primatives.add(sphere3);
-		camera = new Camera(new Point3D(-30, 60, 20), new Vector3D(1, -3, 0), new Vector3D(0,0,1),
+		camera = new Camera(new Point3D(0, 90, 10), new Vector3D(0, -1, 0), new Vector3D(0,0,1),
 				51.75, 40, 2000, 1500);
 		rays = camera.getRays();
 		colors = new IntColor[rays.length][rays[0].length];
@@ -96,7 +100,7 @@ public class Environment {
 		{
 			for(int y = 0; y < colors[x].length; y++)
 			{
-				if(y == 607 && x == 165)
+				if(y == 700 && x == 900)
 					System.out.println("Found it!"); // debug line, ignore
 				colors[x][y] = getColor(rays[x][y], 0);
 					
@@ -159,8 +163,12 @@ public class Environment {
 	}
 	
 	private boolean isInShadow(Point3D point) {
-		Primitive s = getFirstIntersect(new Ray3D(Vector3D.makeVector(point, lightSource), point));
-		return s != null;
+		Ray3D lightRay = new Ray3D(Vector3D.makeVector(point, lightSource), point);
+		Primitive s = getFirstIntersect(lightRay);
+		if(s == null)
+			return false;
+		double dist = Vector3D.makeVector(s.findFirstIntersect(lightRay), point).length();
+		return dist < lightRay.t.length() && !isPortal;
 	}
 
 	private Primitive getFirstIntersect(Ray3D ray)

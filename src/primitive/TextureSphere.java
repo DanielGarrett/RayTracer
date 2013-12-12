@@ -15,8 +15,6 @@ public class TextureSphere extends Sphere {
 	private Vector3D north;
 	private Vector3D prime;
 	private IntColor[][] map;
-	private double max = 0/-1;
-	private double min = 0/1;
 
 	public TextureSphere(Point3D center, double radius, IntColor base,
 			double reflectivity, double transmittivity, Vector3D up, Vector3D primeMer, String filename) {
@@ -33,11 +31,13 @@ public class TextureSphere extends Sphere {
 				for(int y = 0; y < map[x].length; y++)
 				{
 					int num = image.getRGB(x, y);
-					int blue = num % 255;
+					num = num << 8;
+					num = num >>> 8;
+					int blue = num % 256;
 					num /= 256;
-					int green = num % 255;
+					int green = num % 256;
 					num /= 256;
-					int red = num % 255;
+					int red = num % 256;
 					map[x][y] = new IntColor(red, blue, green);
 				}
 			}
@@ -53,16 +53,17 @@ public class TextureSphere extends Sphere {
 		Vector3D radius = Vector3D.makeVector(center, point); // vector from center to point;
 		double northsouthcostheta = radius.dot(north)/(radius.length()*north.length());
 		double northsouthfactor = (Math.acos(northsouthcostheta))/(Math.PI);
-		if(northsouthfactor > max)
-			max = northsouthfactor;
-		if(northsouthfactor < min)
-			min = northsouthfactor;
-		System.out.println(min + ", " + max);
 		Vector3D temp = radius.cross(north).unit();
 		Vector3D radiusOnEq = north.cross(temp);
 		double eastwestcostheta = radiusOnEq.dot(prime)/(radiusOnEq.length()*prime.length());
-		double eastwestfactor = (Math.acos(eastwestcostheta))/(Math.PI*2);
-		return new IntColor(255-(int)(northsouthfactor*255), (int)(northsouthfactor*255), 0);
+		double eastwestfactor = (Math.acos(eastwestcostheta))/(Math.PI);
+		Vector3D eastern = north.cross(prime);
+		double easterndot = eastern.dot(radius);
+		if(easterndot > 0)
+			eastwestfactor = (eastwestfactor+1)/2;
+		else
+			eastwestfactor = (-eastwestfactor+1)/2;
+		return map[(int)(eastwestfactor*map.length)][(int)(northsouthfactor*map[0].length)];
 	}
 
 }

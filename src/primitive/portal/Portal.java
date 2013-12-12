@@ -106,10 +106,9 @@ public class Portal implements Primitive {
 		if(!isOnSurface(point))
 			return Ray3D.nullVal;
 		Point3D basisPoint = pointToBasis(point);
-		Vector3D temp = vectorToBasis(incident);
-		Vector3D basisVector = new Vector3D(temp.x, temp.y, -temp.z);
+		Vector3D basisVector = vectorToBasis(incident);
 		Ray3D basisRay = new Ray3D(basisVector, basisPoint);
-		Ray3D finalRay = link.rayToBasis(basisRay);
+		Ray3D finalRay = link.basisToRay(basisRay);
 		return finalRay;
 	}
 
